@@ -20,8 +20,8 @@ function getComputerChoice(){
 
 function playRound(playerSelection, computerSelection){
     let playerInputLower = playerSelection.toLowerCase();
-    console.log(playerInputLower);
-    console.log(computerSelection);
+    // console.log(playerInputLower);
+    // console.log(computerSelection);
     if(playerInputLower == "rock" && computerSelection == "paper"){
         return "You Lose! Paper beats rock.";
     } else if (playerInputLower == "paper" && computerSelection == "scissors"){
@@ -43,3 +43,11 @@ function playRound(playerSelection, computerSelection){
 // const playerSelection = "paper";
 // const computerSelection = getComputerChoice();
 // console.log(playRound(playerSelection, computerSelection));
+
+function game(){
+    for(let round = 1; round < 6; round++){
+        console.log(playRound(prompt(), getComputerChoice()));
+    }
+}
+
+console.log(game());
