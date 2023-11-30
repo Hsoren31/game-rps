@@ -19,15 +19,6 @@ function getComputerChoice(){
 }
 // console.log(getComputerChoice());    
 
-function getplayerChoice(){
-    let playerChoice = prompt("Rock, Paper, or Scissors?");
-    if(playerChoice.toLowerCase() == "rock" || "paper" || "scissors"){
-        return playerChoice.toLowerCase();
-    } else {
-        return "Invalid choice."
-    }
-}
-
 function playRound(playerSelection, computerSelection){
     console.log(playerSelection);
     console.log(computerSelection);
@@ -55,23 +46,19 @@ function playRound(playerSelection, computerSelection){
 }
 
 
-// console.log(playRound(getplayerChoice(), getComputerChoice()));
+//UI
+const rockBtn = document.getElementById('rockBtn');
+const paperBtn = document.getElementById('paperBtn');
+const scissorsBtn = document.getElementById('scissorsBtn');
 
-function game(){
-    while(playerScore < 5 && computerScore < 5){
-        playRound(getplayerChoice(), getComputerChoice());
-    }
-}
+rockBtn.addEventListener('click', () => {
+    playRound('rock', getComputerChoice());
+});
 
-game();
-console.log(playerScore);
-console.log(computerScore);
+paperBtn.addEventListener('click', () => {
+    playRound('paper', getComputerChoice());
+});
 
-function winGame(playerFinalScore, computerFinalScore){
-    if(playerFinalScore == 5){
-        return "You won the game. Congratulations!";
-    } else if (computerFinalScore == 5) {
-        return "You lost the game. Better luck next time.";
-    }
-}
-winGame(playerScore, computerScore);
+scissorsBtn.addEventListener('click', () => {
+    playRound('scissors', getComputerChoice());
+});
