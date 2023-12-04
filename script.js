@@ -22,43 +22,46 @@ function getComputerChoice(){
 function playRound(playerSelection, computerSelection){
     console.log(playerSelection);
     console.log(computerSelection);
-    if(playerSelection == "rock" && computerSelection == "paper"){
+    if((playerSelection == "rock" && computerSelection == "paper")
+       || (playerSelection == "paper" && computerSelection == "scissors")
+       || (playerSelection == "scissors" && computerSelection == "rock")){
         ++computerScore;
-        return "You Lose! Paper beats rock.";
-    } else if (playerSelection == "paper" && computerSelection == "scissors"){
-        ++computerScore;
-        return "You Lose! Scissors beats paper.";
-    } else if (playerSelection == "scissors" && computerSelection == "rock"){
-        ++computerScore;
-        return "You Lose! Rock beats scissors.";
-    } else if (playerSelection == "rock" && computerSelection == "scissors"){
+        return `You Lose. ${computerSelection} beats ${playerSelection}.`;
+
+    } else if ((playerSelection == "rock" && computerSelection == "scissors")
+            || (playerSelection == "paper" && computerSelection == "rock")
+            || (playerSelection == "scissors" && computerSelection == "paper")){
         ++playerScore;
-        return "You Win! Rock beats scissors.";
-    } else if (playerSelection == "paper" && computerSelection == "rock"){
-        ++playerScore;
-        return "You Win! Paper beats rock.";
-    } else if (playerSelection == "scissors" && computerSelection == "paper"){
-        ++playerScore;
-        return "You Win! Scissors beats paper.";
+        return `You Win! ${playerSelection} beats ${computerSelection}.`;
     } else if (playerSelection === computerSelection){
         return "You Tied!";
     }
 }
 
-
 //UI
-const rockBtn = document.getElementById('rockBtn');
-const paperBtn = document.getElementById('paperBtn');
-const scissorsBtn = document.getElementById('scissorsBtn');
+const buttons = document.querySelectorAll('.button');
+const roundResults = document.querySelector(".roundResults");
 
-rockBtn.addEventListener('click', () => {
-    playRound('rock', getComputerChoice());
-});
+buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        let playerSelection = button.id;
+        const resultText = playRound(playerSelection, getComputerChoice());
+        roundResults.textContent = resultText;
+        
+    })
+})
 
-paperBtn.addEventListener('click', () => {
-    playRound('paper', getComputerChoice());
-});
+//Display Results
+const resultContainer = document.querySelector('.results');
+const playerResults = document.querySelector('.playerResults')
+const compResults = document.querySelector('.compResults');
 
-scissorsBtn.addEventListener('click', () => {
-    playRound('scissors', getComputerChoice());
-});
+const playerFinalScore = document.createElement('p');
+playerFinalScore.classList.add('playerFinalScore');
+playerFinalScore.textContent = playerScore;
+resultContainer.insertBefore(playerFinalScore, compResults);
+
+const compFinalScore = document.createElement('p');
+compFinalScore.classList.add('compFinalScore');
+compFinalScore.textContent = computerScore;
+resultContainer.appendChild(compFinalScore);
