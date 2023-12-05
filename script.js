@@ -25,13 +25,13 @@ function playRound(playerSelection, computerSelection){
     if((playerSelection == "rock" && computerSelection == "paper")
        || (playerSelection == "paper" && computerSelection == "scissors")
        || (playerSelection == "scissors" && computerSelection == "rock")){
-        ++computerScore;
+        computerScore++;
         return `You Lose. ${computerSelection} beats ${playerSelection}.`;
 
     } else if ((playerSelection == "rock" && computerSelection == "scissors")
             || (playerSelection == "paper" && computerSelection == "rock")
             || (playerSelection == "scissors" && computerSelection == "paper")){
-        ++playerScore;
+        playerScore++;
         return `You Win! ${playerSelection} beats ${computerSelection}.`;
     } else if (playerSelection === computerSelection){
         return "You Tied!";
@@ -47,7 +47,8 @@ buttons.forEach((button) => {
         let playerSelection = button.id;
         const resultText = playRound(playerSelection, getComputerChoice());
         roundResults.textContent = resultText;
-        
+        playersScore.textContent = playerScore;
+        compsScore.textContent = computerScore;
     })
 })
 
@@ -56,12 +57,12 @@ const resultContainer = document.querySelector('.results');
 const playerResults = document.querySelector('.playerResults')
 const compResults = document.querySelector('.compResults');
 
-const playerFinalScore = document.createElement('p');
-playerFinalScore.classList.add('playerFinalScore');
-playerFinalScore.textContent = playerScore;
-resultContainer.insertBefore(playerFinalScore, compResults);
+const playersScore = document.createElement('p');
+playersScore.classList.add('playersScore');
 
-const compFinalScore = document.createElement('p');
-compFinalScore.classList.add('compFinalScore');
-compFinalScore.textContent = computerScore;
-resultContainer.appendChild(compFinalScore);
+resultContainer.insertBefore(playersScore, compResults);
+
+const compsScore = document.createElement('p');
+compsScore.classList.add('compsScore');
+
+resultContainer.appendChild(compsScore);
