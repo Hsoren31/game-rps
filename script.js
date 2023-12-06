@@ -1,24 +1,12 @@
+//Game functions
 let playerScore = 0;
 let computerScore = 0;
 function getComputerChoice(){
+    let choices = ['rock', 'paper', 'scissors'];
     let randomNumber = Math.floor(Math.random()*3);
-
-    switch(randomNumber){
-        case(0):
-            return "rock";
-            break;
-        case(1):
-            return "paper";
-            break;
-        case(2):
-            return "scissors";
-            break;
-        default:
-            return "Something went wrong. Try again."
+    return choices[randomNumber];
     }
-}
-// console.log(getComputerChoice());    
-
+ 
 function playRound(playerSelection, computerSelection){
     console.log(playerSelection);
     console.log(computerSelection);
@@ -34,13 +22,31 @@ function playRound(playerSelection, computerSelection){
         playerScore++;
         return `You Win! ${playerSelection} beats ${computerSelection}.`;
     } else if (playerSelection === computerSelection){
+        computerScore++;
+        playerScore++;
         return "You Tied!";
     }
 }
 
-//UI
+function endGame(){
+    if(playerScore > computerScore){
+        winnerMessage.textContent = 'You won the Game!';
+    }else if(computerScore > playerScore){
+        winnerMessage.textContent = 'You lost the Game.';
+    } else {
+        winnerMessage.textContent = 'You tied.';
+    }
+}
+
 const buttons = document.querySelectorAll('.button');
 const roundResults = document.querySelector(".roundResults");
+const resultContainer = document.querySelector('.results');
+const playerResults = document.querySelector('.playerResults')
+const compResults = document.querySelector('.compResults');
+const playersScore = document.querySelector('.playersScore');
+const compsScore = document.querySelector('.compsScore');
+const winnerMessage = document.querySelector('.winnerMessage');
+
 
 buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -49,20 +55,12 @@ buttons.forEach((button) => {
         roundResults.textContent = resultText;
         playersScore.textContent = playerScore;
         compsScore.textContent = computerScore;
+
+        if(playerScore === 5 || computerScore === 5){
+            endGame();
+            playerScore = 0;
+            computerScore = 0;
+            winnerMessage = '';
+        } 
     })
 })
-
-//Display Results
-const resultContainer = document.querySelector('.results');
-const playerResults = document.querySelector('.playerResults')
-const compResults = document.querySelector('.compResults');
-
-const playersScore = document.createElement('p');
-playersScore.classList.add('playersScore');
-
-resultContainer.insertBefore(playersScore, compResults);
-
-const compsScore = document.createElement('p');
-compsScore.classList.add('compsScore');
-
-resultContainer.appendChild(compsScore);
